@@ -1,0 +1,23 @@
+package eg.edu.alexu;
+
+public class TrieNode extends BasicTrieNode {
+
+	public TrieNode(BasicTrieNode p, char x) {
+		super(p, x);
+	}
+
+	Range rID;
+
+	void adjust(int id, int len) {
+		if (rID == null)
+			rID = new Range(id, id);
+		else
+			rID.extend(id);
+	}
+
+	@Override
+	public String toString() {
+		return "TN[" + id + "] " + " R:" + rID;
+	}
+
+}
