@@ -1,12 +1,13 @@
 
 import java.awt.Color;
-
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.Random;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -14,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
-import eg.edu.alexu.ehr.*;
+import eg.edu.alexu.*;
 
 /**
  * @author Khalefa
@@ -48,6 +49,21 @@ public class Test {
 			i.printStackTrace();
 		}
 	}
+	
+	public static void writeWords(String file) {
+		try {
+			PrintWriter writer = new PrintWriter(file + ".words", "UTF-8");
+			Random randomGenerator = new Random();
+		    for (int idx = 0; idx < Trie.dictionary.size(); ++idx){
+		      int randomInt = (int)(Math.random()* 1000);//randomGenerator.nextInt(Trie.dictionary.size() + 1);
+		      writer.println(Trie.dictionary.get(idx) + "," + randomInt);
+		    }
+			writer.close();
+			System.out.printf("Serialized data is saved in " + file);
+		} catch (IOException i) {
+			i.printStackTrace();
+		}
+	}
 
 	public static void Desrialize(String file) {
 		try {
@@ -68,19 +84,24 @@ public class Test {
 
 	public static void main(String[] args) {
 
-		String[] filename = { "icd10cm edited.txt", "test.txt", "words.txt", "test2.txt" };
-		String file = "c:\\data\\Edit\\" + filename[0];
-		//t = new PivotalTrie(file);
-
-		// Serilaize(file);
-		 t=null;
-		Desrialize(file + ".ser");
-		SwingUtilities.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				new Test();
-			}
-		});
+		String[] filename = { "icd10cmedited.txt", "test.txt", "words.txt", "test2.txt" };
+		String file = "c:\\data\\Edit\\icd10cmedited.txt.words" ;
+		//String file = "c:\\data\\Edit\\test.txt";
+		t = new PivotalTrie(file);
+        t.gstrQuery = "abc";
+		Matcher m;
+		m = new Matcher((PivotalTrie)t);
+		m.getCandidate(t.gstrQuery);
+//			Serilaize(file);
+//			//writeWords(file);
+//			 t=null;
+//			Desrialize(file + ".ser");
+//			SwingUtilities.invokeLater(new Runnable() {
+//				@Override
+//				public void run() {
+//					new Test();
+//				}
+//			});
 	}
 
 }

@@ -26,7 +26,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import eg.edu.alexu.ehr.*;
+import eg.edu.alexu.*;
 
 class AutoSuggestor {
 	final int tau = 2;
